@@ -1,0 +1,69 @@
+<app-header [withBackButton]="true" backUrl="/"></app-header>
+
+<main class="max-w-[40em] w-full mx-[auto]">
+    <div class="pt-[4.25em] px-[1em] min-h-screen flex flex-col justify-between">
+        <div class="mt-[1em]">
+            <form (submit)="submit()" [formGroup]="todoForm">
+                <label class="flex flex-col">
+                    <p class="text-[0.875em] text-purple-900">Deadline</p>
+                    <input formControlName="deadline" name="deadline" type="datetime-local" class="mt-[0.5em] px-[0.75em] py-[0.5em] text-[1em] border border-purple-200">
+                    <ng-container *ngIf="todoForm.get('deadline')?.invalid && (todoForm.get('deadline')?.dirty || todoForm.get('deadline')?.touched)">
+                        <small *ngIf="todoForm.get('deadline')?.errors?.['required']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            This field is required
+                        </small>
+                        <small *ngIf="todoForm.get('deadline')?.errors?.['date']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            The date must not be in the past
+                        </small>
+                    </ng-container>
+                </label>
+
+                <label class="mt-[1em] flex flex-col">
+                    <p class="text-[0.875em] text-purple-900">Description</p>
+                    <textarea formControlName="description" name="desc" rows="5" class="mt-[0.5em] px-[0.75em] py-[0.5em] text-[1em] border border-purple-200"></textarea>
+                    <ng-container *ngIf="todoForm.get('description')?.invalid && (todoForm.get('description')?.dirty || todoForm.get('description')?.touched)">
+                        <small *ngIf="todoForm.get('description')?.errors?.['required']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            This field is required
+                        </small>
+                        <small *ngIf="todoForm.get('description')?.errors?.['maxlength']?.['actualLength']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            Maximum lenght is 100
+                        </small>
+                    </ng-container>
+                </label>
+
+                <label class="mt-[1em] flex flex-col">
+                    <p class="text-[0.875em] text-purple-900">Snapshot Image</p>
+                    <input formControlName="snapshotImage" name="snapshotImage" type="file" accept="image/*" class="mt-[0.5em] px-[0.75em] py-[0.5em] text-[1em] border border-purple-200">
+                    <ng-container *ngIf="todoForm.get('snapshotImage')?.invalid && (todoForm.get('snapshotImage')?.dirty || todoForm.get('snapshotImage')?.touched)">
+                        <small *ngIf="todoForm.get('snapshotImage')?.errors?.['required']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            This field is required
+                        </small>
+                        <small *ngIf="todoForm.get('snapshotImage')?.errors?.['fileSize']?.['refValues']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            Maximum size is 1MB
+                        </small>
+                    </ng-container>
+                </label>
+
+                <label class="mt-[1em] flex flex-col">
+                    <p class="text-[0.875em] text-purple-900">Is Done?</p>
+                    <select formControlName="done" name="done" class="mt-[0.5em] px-[0.75em] py-[0.5em] text-[1em] border border-purple-200 bg-white">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <ng-container *ngIf="todoForm.get('done')?.invalid && (todoForm.get('done')?.dirty || todoForm.get('done')?.touched)">
+                        <small *ngIf="todoForm.get('done')?.errors?.['required']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            This field is required
+                        </small>
+                    </ng-container>
+                </label>
+
+                <div class="mt-[2em]">
+                    <button [class.invalid]="todoForm.invalid" type="submit" class="w-full text-[1em] font-medium text-white bg-purple-900 px-[1em] py-[0.5em]">
+                        <ng-container *ngIf="!isSubmitting">Update</ng-container>
+                        <ng-container *ngIf="isSubmitting">Updating...</ng-container>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</main>

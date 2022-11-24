@@ -1,0 +1,41 @@
+<app-header [withAddButton]="true"></app-header>
+
+<main class="max-w-[40em] w-full mx-[auto]">
+    <div class="pt-[4.25em] px-[1em] min-h-screen flex flex-col justify-between">
+        <div>
+            <div *ngIf="authSrv.user.token" class="mt-[1em]">
+                <p class="text-[1.25em] text-center">Welcome back, {{ authSrv.user.name }}</p>
+            </div>
+            <div *ngIf="todoSrv.todos.length > 0" class="mt-[1em] flex items-center space-x-[0.75em]">
+                <p class="text-[0.75em] text-purple-900">Sort by date</p> 
+                <button (click)="doSort()" class="text-[0.75em] font-medium text-purple-900 bg-gray-200 px-[1em] py-[0.5em]">{{ todoSrv.sortState }}</button>
+            </div>
+            <ul @fadeOut @fadeIn *ngFor="let item of todoSrv.todos; index as i">
+                <li class="mt-[1em] p-[1em] border border-purple-200 rounded-[0.5em] flex justify-between">
+                    <div class="flex items-center space-x-[1em]">
+                        <input (change)="update(item)" class="accent-purple-900" type="checkbox" [checked]="item.done">
+                        <figure class="rounded-[0.5em] overflow-hidden">
+                            <img [src]="item.snapshotImage" alt="" class="object-cover w-[4em] h-[4em]">
+                        </figure>
+                        <div>
+                            <p class="text-[0.75em] text-purple-900">{{ item.deadline | date: 'd MMM y, h:mm a' }}</p>
+                            <p *ngIf="!item.done">{{ item.description }}</p>
+                            <p *ngIf="item.done" class="line-through">{{ item.description }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <a (click)="todoSrv.selectedTodo = item" [routerLink]="['/edit', item.id]" class="block text-[0.75em] font-medium text-white bg-lime-600 px-[1em] py-[0.5em]">
+                            Edit
+                        </a>
+                        <button (click)="delete(i, item)" class="text-[0.75em] font-medium text-white bg-red-700 px-[1em] py-[0.5em]">
+                            <ng-container *ngIf="!item.isDeleting">Delete</ng-container>
+                            <ng-container *ngIf="item.isDeleting">Deleting...</ng-container>
+                        </button>
+                    </div>
+                </li>   
+            </ul>
+            <p *ngIf="todoSrv.todos.length <= 0" class="text-center mt-[3em] text-gray-600">No data</p>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</main>

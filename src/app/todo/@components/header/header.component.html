@@ -1,0 +1,16 @@
+<header class="fixed top-0 left-0 w-full shadow-md px-[1em] flex justify-between items-center p-[1em] bg-white">
+    <div class="w-[6em] flex">
+        <ng-container *ngIf="withBackButton">
+            <a [routerLink]="backUrl" class="text-[0.875em] font-medium text-purple-900 bg-gray-200 px-[1em] py-[0.5em]">&#11164;&nbsp; Back</a>
+        </ng-container>
+    </div>
+    <h1 class="font-bold text-[1.5em] text-purple-900">Todo</h1>
+    <div class="w-[6em] flex justify-end">
+        <ng-container *ngIf="withAddButton">
+            <a routerLink="/add" class="text-[0.875em] font-medium text-white bg-purple-900 px-[1em] py-[0.5em]">Add</a>
+        </ng-container>
+        <ng-container *ngIf="authSrv.user?.token">
+            <a (click)="authSrv.logout()" class="text-[0.875em] font-medium text-purple-900 bg-gray-200 px-[1em] py-[0.5em] cursor-pointer">Logout</a>
+        </ng-container>
+    </div>
+</header>

@@ -1,0 +1,41 @@
+<main class="max-w-[40em] w-full mx-[auto]">
+    <div class="pt-[4.25em] px-[1em] min-h-screen flex flex-col justify-between">
+        <div class="mt-[1em]">
+            <h1 class="text-[1.5em] font-bold text-purple-900">Login to Your Account</h1>
+            <form (submit)="submit()" [formGroup]="loginForm" class="mt-[2em]">
+                <label class="flex flex-col">
+                    <p class="text-[0.875em] text-purple-900">Username</p>
+                    <input formControlName="username" name="username" type="text" class="mt-[0.5em] px-[0.75em] py-[0.5em] text-[1em] border border-purple-200">
+                    <ng-container *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+                        <small *ngIf="loginForm.get('username')?.errors?.['required']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            This field is required
+                        </small>
+                    </ng-container>
+                </label>
+
+                <label class="mt-[1em] flex flex-col">
+                    <p class="text-[0.875em] text-purple-900">Password</p>
+                    <input formControlName="password" name="password" type="password" class="mt-[0.5em] px-[0.75em] py-[0.5em] text-[1em] border border-purple-200">
+                    <ng-container *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                        <small *ngIf="loginForm.get('password')?.errors?.['required']" class="mt-[0.5em] text-[0.75em] text-red-600">
+                            This field is required
+                        </small>
+                    </ng-container>
+                </label>
+
+                <div class="mt-[2em]">
+                    <button [class.invalid]="loginForm.invalid" type="submit" class="w-full text-[1em] font-medium text-white bg-purple-900 px-[1em] py-[0.5em]">
+                        <ng-container *ngIf="!isSubmitting">Login</ng-container>
+                        <ng-container *ngIf="isSubmitting">Login...</ng-container>
+                    </button>
+                </div>
+
+                <div class="mt-[2em]">
+                    <p class="text-[0.75em] text-gray-600">Note! for demo purposes, please use the data below:</p>
+                    <p class="text-[0.75em] text-gray-600">Username: rein</p>
+                    <p class="text-[0.75em] text-gray-600">Password: willibald123</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
