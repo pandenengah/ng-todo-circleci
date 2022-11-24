@@ -24,7 +24,7 @@ jobs:
           key: v1-deps-{{ checksum "package-lock.json" }}
       # install dependencies
       - run:
-          name: install dependencies
+          name: Install dependencies
           command: npm install
       # save any changes to the cache
       - save_cache:
@@ -33,7 +33,7 @@ jobs:
             - node_modules
       # run test suite
       - run:
-          name: test
+          name: Testing
           command: npm run test
 
 workflows:
